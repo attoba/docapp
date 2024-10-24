@@ -1,0 +1,10 @@
+RewriteEngine On
+RewriteBase /tutorial2/
+
+# Exclude specific files and directories from being rewritten
+RewriteCond %{REQUEST_URI} !^(index\.php|assets|images|js|css|uploads|flacon.png)
+
+# Redirect all requests to the index.php file
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?/$1 [L]

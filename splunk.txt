@@ -1,0 +1,10 @@
+Sourcetype par défaut: json/ log4php
+
+port http :8088
+==========================================================
+
+Index par défaut :documents
+Sourcetype: log4php
+Nom: documents-logs
+Remplace le nom de la source: http-event-logs
+token: 42534f72-362c-4ec5-99af-b313ba310ed0

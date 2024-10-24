@@ -1,0 +1,17 @@
+Client->AppBancaire: Demande d'ouverture de compte
+AppBancaire->AppBancaire: Valider les données du client
+alt Données invalides
+    AppBancaire->Client: Erreur : Données invalides
+else Données valides
+    AppBancaire->BaseDeDonnées: Vérifier si l'email existe
+    alt L'email existe
+        BaseDeDonnées-->AppBancaire: Email déjà utilisé
+        AppBancaire->Client: Erreur : L'email existe déjà
+    else L'email n'existe pas
+        BaseDeDonnées-->AppBancaire: Email disponible
+        AppBancaire->BaseDeDonnées: Créer un nouveau compte
+        BaseDeDonnées-->AppBancaire: Compte créé
+        AppBancaire->Client: Confirmation d'ouverture de compte
+        Client->AppBancaire: Compte ouvert avec succès
+    end
+end

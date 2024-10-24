@@ -1,0 +1,13 @@
+combined_n_inventaire = fields.Char(string='Numéro d\'inventaire', compute='_compute_combined_n_inventaire')
+    
+@api.depends('n_inventaire_1', 'n_inventaire_2')
+    def _compute_combined_n_inventaire(self):
+        for material in self:
+            combined_n_inventaire = ""
+            if material.n_inventaire_1 and material.n_inventaire_2:
+                combined_n_inventaire = f"{material.n_inventaire_1} - {material.n_inventaire_2}"
+            elif material.n_inventaire_1:
+                combined_n_inventaire = material.n_inventaire_1
+            elif material.n_inventaire_2:
+                combined_n_inventaire = material.n_inventaire_2
+            material.combined_n_inventaire = combined_n_inventaire

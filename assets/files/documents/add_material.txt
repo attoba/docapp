@@ -1,0 +1,22 @@
+Administrateur -> Système de Gestion du matèriel : Demande d'Ajout d'un Nouvel Équipement
+   - Contenu : Demande d'ajouter un nouvel équipement.
+
+Système de Gestion du matèriel -> Administrateur : Demande de Détails du matériel
+   - Contenu : Demande les détails de l'équipement tels que le nom, la description, etc.
+
+Administrateur -> Système de Gestion du matèriel :
+ Saisie des Détails du matériel
+ fournit les detailes du matériel (nom, description, etc.).
+
+Système de Gestion du matèriel-> Base de Données  : Validation et Ajout du matériel
+   - Contenu : Envoie les détails du matériel à la base de données pour validation et ajout.
+
+Base de Données -> Système de Gestion du matèriel : Résultat de Validation du matériel
+   - Contenu : Réponse indiquant si les détails de le matériel sont valides.
+
+Système de Gestion du matèriel -> Administrateur : Notification du Résultat de Validation
+   - Contenu : Notifie l'administrateur si l'équipement a été ajouté avec succès ou non.
+
+
+
+

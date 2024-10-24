@@ -1,0 +1,400 @@
+UNIVERSITE SIDI MOHAMMED BEN ABDELLAH
+ECOLE NATIONALE DES SCIENCES APPLIQUEES DE FES
+FILIERE : GTR2
+
+SERVICES ET NOUVELLES TECHNOLOGIES IP
+
+Manuel de Travaux Pratiques v3
+
+Prof : F.YAKINE
+TP 2 SERVICES ET NOUVELLES TECHNOLOGIES IP
+
+TP2 : Transition d'IPv4 a IPv6é
+
+1. Tunnelage avec GRE (Generic Routing Encapsulation)
+
+La méthode GRE encapsule les paquets IPv6 dans les paquets IPv4 et les transporte sur le réseau IPv4.
+Le dispositif de réception décapsule le paquet et envoie uniquement les informations IPvé6 a I'hdéte.
+
+Pour cet exercice, nous utiliserons la topologie suivante :
+
+Topologie :
+10.0.0.1/24 10.2.0.1/24
+Fao) wh Foor
+ee
+7 R41 ~.
+“ ~
+Fad/0 “* ~~ Fa0/0 10.2.0.2/04
+10.0.0.2/24 — “
+a GRE Tunnel 0 ‘
+)
+id Tunneld Interface IP Tunnel Interface IP
+2000:1-:1/64 Fao 2010:-1/64 2010--2/64 Fa0t 2000:2:-1/64
+| |
+| I
+!
+4
+Fal
+= mh
+=, LJ
+PC-PT FoF
+Pco PC-PT
+PCt
+2000:1::2/64. 2000:2::2/64
+Table d’adressage
+Device Interface IPv4 Address IPv6 Address
+R1 Fa0/0 10.0.0.1/24
+Fa0/1 10.2.0.1/24
+R2 Fa0/0 10.0.0.2/24
+Fa0/1 2000:1::1/64
+R3 Fa0/0 10.2.0.2/24
+Fa0/1 2000:2::1/64
+
+Pr.YAKINE 2
+
+TP 2 SERVICES ET NOUVELLES TECHNOLOGIES IP
+
+Device Interface IPv4 Address IPv6 Address
+
+2000:1::2/64
+Default gateway
+PCO NIC 2000:1::1/64
+
+2000:2::2/64
+
+Default gateway
+PCI NIC 2000:2::1/64
+
+Pour le routage, nous configurons EIGRP sur les interfaces IPv4 pour les trois routeurs et le routage
+statique sur R2 et R3. Nous commencerons par configurer R1, qui est un routeur IPv4 seulement.
+
+Rl (config) #int fa0/0
+
+Rl (config-if)#no shutdown
+Rl(config-if)#ip add 10.0.0.1 255.255.255.0
+Rl (config) #int fa0/1
+
+Rl (config-if)#no shutdown
+
+Rl(config-if)#ip add 10.2.0.1 255.255.255.0
+Rl (config—)#router eigrp 1
+Rl (config-router) #network 10.
+R1 (
+
+0.0.0 0.0.0.255
+config-router) #network 10.2.0.0 0.0.0.255
+
+Maintenant, sur le routeur R2, nous configurons les adresses IPv4 et IPv6 et le routage,
+respectivement.
+
+R2(config) #ipv6 unicast-—routing
+R2(config)#int fa0/1
+
+R2(config-if)#no shutdown
+
+R2(config-if)#ipv6 add 2000:1::1/64
+R2(config)#int fa0/0
+
+R2(config-if)#no shutdown
+
+R2(config-if)#ip add 10.0.0.2 255.255.255.0
+R2(config)#router eigrp 1
+
+R2(config-router) #network 10.0.0.0 0.0.0.255
+
+Nous faisons la méme chose sur R3.
+
+R3 (config) #ipv6 unicast-—routing
+
+R3 (config) #int fa0/1
+
+R3(config-if)#no shutdown
+
+R3(config-if)#ipv6 add 2000:2::1/64
+
+R3 (config) #int fa0/0
+
+R3(config-if)#no shutdown
+
+R3(config-if)#ip add 10.2.0.2 255.255.255.0
+R3(config)#router eigrp 1
+
+R3 (config-router) #network 10.2.0.0 0.0.0.255
+
+e Etape 1: Vérifiez l'accessibilité entre R2 et R3.
+
+a) de R2, ping R3 sur l’interface fa0/0 a l'aide d’IPv4. Tous les pings doivent réussir.
+R2# ping 10.2.0.2
+
+Pr.YAKINE 3
+TP 2 SERVICES ET NOUVELLES TECHNOLOGIES IP
+
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 10.2.0.2, timeout is 2 seconds:
+
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms
+
+b) de R3, ping R2 sur l’interface fa0/0 a l’aide d’'IPv4 .Tous les pings doivent réussir.
+R3# ping 10.0.0.2
+
+Type escape sequence to abort.
+
+Sending 5, 100-byte ICMP Echos to 10.0.0.2, timeout is 2 seconds:
+
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms
+
+e tape 2: Créez un tunnel GRE entre R2 et R3.
+
+Sur R2, créez l'interface Tunnel 0 en spécifiant l'adresse IPv6 2010::1/64, la source de tunnel f0/0, une
+destination de tunnel 10.2.0.2 et le mode tunnel ipv6ip
+
+Pour le routeur R2, exécutez la liste suivante des commandes :
+
+R2 (config) #int tunnel 0
+
+R2(config-if) #tunnel source £0/0
+R2(config-if) #tunnel destination 10.2.0.2
+R2(config-if) #tunnel mode ipv6ip
+R2(config-if)#ipv6 address 2010::1/64
+
+Notez que |'@ IP de destination est celle de l’interface fO0 /O de R3. Configurez l'autre extrémité du
+tunnel sur le routeur R3 :
+
+R3 (config) #int tunnel 0
+
+R3(config-if) #tunnel source £0/0
+R3(config-if) #tunnel destination 10.0.0.2
+R3(config-if) #tunnel mode ipv6ip
+R3(config-if) #ipv6 address 2010::2/64
+
+Il ne reste maintenant que la configuration des routes statiques IPv6 pour les préfixes 2000: 1:: / 64
+et 2000: 2 :: / 64
+
+Sur R2:
+
+R2(config)#ipv6 route 2000:2::/64 2010::2
+
+Sur R3
+
+R3(config)#ipv6 route 2000:1::/64 2010::1
+
+e Etape 3: les tests
+
+a) Sur R2, exécuter la commande show interface tunnel 0 et examinez la sortie.
+R2#sh interfaces tunnel 0
+Tunnél0 is up, line protocol Z8/up (connected)
+Hardware is Tunnel
+MTU 17916 bytes, BW 100 Kbit/sec, DLY 50000 usec,
+reliability 255/255, txload 1/255, rxload 1/255
+Encapsulation TUNNEL, loopback not set
+
+Pr.YAKINE 4
+SERVICES ET NOUVELLES TECHNOLOGIES IP
+
+Keepalive not set
+
+Key disabled, sequencing disabled
+Checksumming of packets disabled
+Tunnel TTL 255
+Fast tunneling enabled
+Tunnel transport MTU 1476 bytes
+Tunnel transmit bandwidth 8000 (kbps)
+Tunnel receive bandwidth 8000 (kbps)
+Last input never, output never, output hang never
+Last clearing of "show interface™ counters never
+Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops:
+
+Queueing strategy: fifo
+Output queue: 0/0 (size/max)
+5 minute input rate 55 bits/sec, 0 packets/sec
+5 minute output rate 53 bits/sec, 0 packets/sec
+A472 packets input, 38960 bytes, 0 no buffer
+Received 0 broadcasts, O runts, O giants, O throttles
+O input errors, O CRC, O frame, 0 overrun, O ignored, 0 abort
+QO input packets with dribble condition detected
+443 packets output, 36640 bytes, 0 underruns
+0 output errors, O collisions, 1 interface resets
+0 unknown protocol drops
+0 output buffer failures, 0 output buffers swapped out
+
+b) Utilisez l'outil PDU simple pour vérifier la connectivité entre PCO et PC1.
+c) Utilisez la commande tracert pour trouver le chemin que prend le protocole ICMPv6.
+
+PC> tracert 2000: 2 :: 2
+
+Que remarquiez-vous ?
+
+Sauvegardez votre fichier de simulation.
+
+2. NAT-PT pour IPv6 : Traduction entre ipv6 et ipv4
+
+Le NAT-PT (Network Address Translation — Protocol Translation) est défini dans les RFC 2766 & RFC
+3152. Il Permet la communication entre noeud et applications IPv6-only et IPv4-only et vice-versa.
+
+Le protocole de translation NAT-PT fonctionne comme le NAT actuel et souffre des mémes limitations
+que ce dernier. Le fonctionnement est le suivant : des paquets envoyés par un héte IPv6 vers un héte
+IPv4 devront avoir leur adresse source et de destination changées en |Pv4 (par le routeur officiant le
+NAT-PT), et inversement pour assurer la communication.
+
+Comme le NAT, il existe plusieurs types de translation possible :
+
+® Statique : A une adresse IPv4 correspondra une adresse IPv6 et vice-versa. Une régle de translation
+doit étre fixée pour chaque héte.
+
+® Dynamique : Un pool d’adresses |IPv4 est disponible pour les translations. A chaque adresse IPv4
+correspond un héte IPv6 sortant.
+
+Pr.YAKINE 5
+TP 2 SERVICES ET NOUVELLES TECHNOLOGIES IP
+
+@ PAT (Port Address Translation) : Permet 4 de multiples adresses IPv6 de correspondre a une
+
+adresse IPv4 en utilisant le numéro de port.
+
+a. Concept NAT-PT
+
+IPv4 IPv6
+| ea Interface #7
+LI,
+———— LI,
+
+— ae .
+IPv4 Host ipv6 nat prefix IPv6 Host
+172.16.1.4 2001 :db8:1987:0:2E0:BOFF:FE6A:412C
+
+= prefix 96-bit permet de router le traffic vers le noeud
+IPv6
+
+b. Configurer NAT-PT
+Mise enroute NAT-PT: [no] ipv6é nat
+
+Configurer global/per interface NAT-PT prefix: [no] ipv6é nat prefix ::/96
+
+Configurer translation statiques :
+[no] ipv6 nat v6v4 source
+[no] ipv6é nat v4v6 source
+¥ Configuring translation dynamique :
+[no] ipv6 nat v6ov4 source pool
+[no] ipvé nat v6v4 pool prefix—-length
+
+c. La maquette
+
+Réseau IPv6 AAAA:S::/64
+
+Réseau IPv4 192.168.55.0/24
+
+AAAA-5--AAG ee 55-0
+seen as 192.168.56.100 Gateway Seen ass ee baa
+
+Sy © Se0/0/1 1
+
+(ee
+1 42 = a
+PT s0/0/1
+30/0/1 1941
+Router IPvt
+
+Nous souhaitons configurer le routeur comme une passerelle entre les réseaux IPv4 et IPv6.
+
+Cisco comprend une fonction de traduction de protocole qui permet d'interconnecter les réseaux IPv6
+et IPv4.
+
+Pr.YAKINE
+TP 2 SERVICES ET NOUVELLES TECHNOLOGIES IP
+
+Les RFC 4038 et 4291 incluent des discussions sur le traitement des paquets IPv4 qui proviennent d'un
+réseau IPv6. La méthode standard actuelle s'appelle «|Pv4-Mapped IPv6 Address», qui fonctionne trés
+simplement. Si un périphérique IPv6 veut envoyer un paquet a un périphérique IPv4 dont l'adresse est
+A.B.C.D, il utilise l'adresse de destination IPv6 :: FFFF: A.B.C.D.
+
+Dans cette maquette NAT-PT, on va configurer une traduction statique entre un périphérique IPv6 et
+l'adresse IPv4 qui se référe a ce périphérique dans le réseau IPv4. Malheureusement, il n'y a aucun
+moyen de coder de maniére unique une adresse IPv6 128 bits dans une adresse |Pv4 32 bits, donc si
+nous voulons une connectivité bidirectionnelle compléte entre ces réseaux, nous devons utiliser une
+régle statique. Ceci est défini a l'aide de lacommande ipv6 nat v6v4 source.
+
+e tape 1: Activer NAT-PT sur le routeur
+
+Dans cet exemple, gO /0 se connecte au réseau IPv6, tandis que SerialO /0/1 se connecte au réseau
+IPv4. Ces deux interfaces sont associées a la régle NAT-PT en utilisant la commande ipv6é nat.
+
+Cette étape consiste a associer cette régle NAT-PT aux interfaces de routeur :
+
+NAT_PT( (config) #ipv6 unicast—routing
+
+NAT_PT (config) #interface g0/0
+
+NAT_PT (config-if) #ipv6 address AAAA:5::2012/64
+
+NAT_PT (config-if) #ipv6 nat
+
+NAT_PT (config—if) #exit
+
+NAT_PT (config) #interface Serial0/0/1
+
+NAT_PT (config-if)#ip address 192.168.55.12 255.255.255.0
+NAT_PT (config-if) #ipv6 nat
+
+NAT_PT (config—if) #exit
+
+e Etape 2 : Configurer les translations statiques :
+
+#sur le routeur NAT-PT
+ipvé nat v4v6 source 192.168.55.11 2001:55::11
+
+!'!--—- Translates the ipv4 add of router_ipv4 s0/0/1 to ipv6é address.
+ipv6é nat v6v4 source AAAA:5::AA9 192.168.56.100
+
+!—-— Translates the ipv6 add g0/0 of Router_ipv6 to ipv4 address.
+ipv6 nat prefix 2001:55::/96
+
+!--— The destination prefixes that matches 2001:55::/96
+!--— are translated by NAT-PT.
+
+Dans ce cas, nous avons décidé d'associer l'adresse unicast globale IPv6, AAAA: 5 :: AAY, avec l'adresse
+IPv4, 192.168.56.100. Maintenant, tous les paquets entrants IPv4 adressés 4 192.168.56.100 seront
+traduits en paquets IPv6 et renvoyés a AAAA: 5 :: AAI. De méme, tous les paquets IPv6 sortants avec
+cette adresse source IPv6 seront traduits en paquets IPv4 avec l'adresse source |IPv4 spécifiée.
+
+e Etape 3: le routage
+
+Ensuite il faut configurer les routes vers les réseaux IPv4 et IPv6.
+
+Pr.YAKINE 7
+TP 2 SERVICES ET NOUVELLES TECHNOLOGIES IP
+
+NAT_PT (config)#ipv6 route ::/0 AAAA:5::AA9
+Router_ipv6 (config) #ipv6 route ::/0 AAAA:5::2012
+Router_ipv4 (config) #ip route 0.0.0.0 0.0.0.0 192.168.55.12
+
+e Les tests:
+a) Vous pouvez maintenant tester la connectivité d’un héte IPv6 vers un héte IPv4 et
+inversement.
+
+Router_ipv6>ping 2001:55::11
+
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 2001:55::11, timeout is 2 seconds:
+
+Success Fate s/100 pexeenl (5/5), round-trip min/avg/max = 0/2/11 ms
+
+Router_ipv4>ping 192.168.56.100
+
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.168.56.100, timeout is 2 seconds:
+
+Success Fate S| 100|pexeenl (5/5), round-trip min/avg/max = 2/5/10 ms
+
+Success rate is 100 percent (5/5), round-trip min/avg/max = 0/2/11 ms
+b) Vous pouvez ensuite regarder la table de traduction NAT-PT avec lacommande: show ipv6
+nat translations
+
+Que remarquez-vous ?
+
+Sauvegardez votre simulation.
+
+Conclusion
+
+Conclure sur ce que vous avez appris et retenu d’important dans ce TP
+
+Pr.YAKINE 8

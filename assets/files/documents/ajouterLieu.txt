@@ -1,0 +1,14 @@
+Utilisateur -> Système : Remplit les détails du lieu (nom, type)
+loop
+alt Click sur "Add Line"
+Utilisateur -> Système : Remplit les détails du matériel
+Utilisateur -> Système : Enregistre le matériel
+Système -> Système : Verification des donnees
+alt donnée manquante ou incorrecte
+Utilisateur <-- Système : Erreur
+else données correctes
+Système -> la base de donnée : Enregistre les détails du matériel
+end
+end
+end loop
+Système -> la base de donnée : Enregistre les détails du lieu

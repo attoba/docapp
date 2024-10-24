@@ -1,0 +1,6 @@
+Utilisateur -> Système : Choisir le menu de l'emplacement du matériel
+Utilisateur -> Système : Fournit  la désignation du matériel
+Système -> la base de donnée :recherche le matériel
+Utilisateur -> Matériel : Déplace le matériel
+Système -> la base de donnée : Enregistre les modifications
+
