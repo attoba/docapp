@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') || exit('No direct script access allowed');
 
 
 $route['webrtc'] = 'Webrtc/index';
@@ -21,7 +21,7 @@ $route['documents'] = 'documents/index';
 
 $route['default_controller'] = 'users/login';
 $route['404_override'] = '';
-$route['translate_uri_dashes'] = FALSE;
+$route['translate_uri_dashes'] = false;
 
 //clients
 $route['clients'] = 'ClientController/clientsTable';

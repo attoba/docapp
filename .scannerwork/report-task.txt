@@ -1,6 +1,6 @@
-projectKey=docApp11
+projectKey=mydocapp111
 serverUrl=http://localhost:9000
 serverVersion=10.7.0.96327
-dashboardUrl=http://localhost:9000/dashboard?id=docApp11
-ceTaskId=5e15f95d-7b3a-4c65-bb36-b10b5efab23e
-ceTaskUrl=http://localhost:9000/api/ce/task?id=5e15f95d-7b3a-4c65-bb36-b10b5efab23e
+dashboardUrl=http://localhost:9000/dashboard?id=mydocapp111
+ceTaskId=9f345c5f-bc24-4ddb-8fa9-51b2bdb643e2
+ceTaskUrl=http://localhost:9000/api/ce/task?id=9f345c5f-bc24-4ddb-8fa9-51b2bdb643e2
