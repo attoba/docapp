@@ -1,0 +1,15 @@
+    <record model="ir.actions.act_window" id="action_materiel_materiel">
+        <field name="name">Materiel</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">materiel.materiel</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_materiel_materiel_tree"/>
+    </record>
+    <record model="ir.actions.act_window" id="action_materiel_enpanne">
+        <field name="name">En panne</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">materiel.materiel</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[('enpanne', '=', 'True')]</field>
+        <field name="view_id" ref="view_materiel_enpanne_tree"/>
+    </record>

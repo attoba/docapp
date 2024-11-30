@@ -1,4 +1,6 @@
 <?php
+namespace App\Config;
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*

@@ -1,0 +1,9 @@
+Utilisateur -> Système : Choisir le menu de création du matériel
+Utilisateur <-- Système :Retourne le formulaire de création du matériel
+Utilisateur -> Système : Remplit les détails du matériel (numéro d'inventaire, désignation, marque, etc.)
+Système -> Système : Verification des donnees
+alt donnée manquante ou incorrecte
+Utilisateur <-- Système : Erreur
+else données correctes
+Système -> la base de donnée : Enregistre les détails du matériel
+end

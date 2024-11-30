@@ -1,0 +1,16 @@
+enpanne_id = fields.Many2one('stock.enpanne', compute='compute_enpanne', inverse='enpanne_inverse')
+    enpanne_ids = fields.One2many('stock.enpanne', 'materiel_id')
+
+    @api.one
+    @api.depends('enpanne_ids')
+    def compute_enpanne(self):
+        if len(self.enpanne_ids) > 0:
+            self.enpanne_id= self.enpanne_ids[0]
+    @api.one
+    def enpanne_inverse(self):
+        if len(self.enpanne_ids) > 0:
+            # delete previous reference
+            enpanne= self.env['stock.enpanne'].browse(self.enpanne_ids[0].id)
+            enpanne.materiel_id = False
+        # set new reference
+        self.enpanne_id.enpanne_id= self

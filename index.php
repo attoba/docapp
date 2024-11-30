@@ -1,4 +1,8 @@
 <?php
+namespace App;
+
+// Existing code for this file
+
 /**
  * CodeIgniter
  *
