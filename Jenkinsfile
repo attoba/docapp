@@ -1,9 +1,6 @@
 pipeline {
     agent any
-
-    tools {
-        sonarQube 'sonar-scanner' // Replace with the name of your configured scanner in Jenkins
-    }
+	SCANNER_HOME = tool 'sonar-scanner'
 
     stages {
         stage('SonarQube Analysis') {
