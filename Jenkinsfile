@@ -8,7 +8,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') { // Replace 'SonarQube' with your SonarQube server name
-                    sh 'sonar-scanner'
+                    sh '$SCANNER_HOME/bin/sonar-scanner'
                 }
             }
         }
