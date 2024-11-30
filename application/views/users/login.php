@@ -51,10 +51,11 @@
                     </div>
                 </div>
             </div>
+        <?php $api_key = getenv('RECAPTCHA_KEY'); ?>
 
             <!-- Google reCAPTCHA -->
             <div class="form-group mb-3">
-                <div class="g-recaptcha" data-sitekey="6Lcoe2EqAAAAACFjt3lex91EQApkLfX3ToTRa59G"></div>
+                <div class="g-recaptcha" data-sitekey=$api_key></div>
             </div>
 
             <!-- Submit Button -->

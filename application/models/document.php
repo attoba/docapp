@@ -180,7 +180,9 @@ public function create($client_id, $user_id) {
         }
 
         // Send the file to VirusTotal API for scanning
-        $api_key = 'cc10ed0aea666afd03641887a27c9b4d566a28bdd48b3d440d8e0064c1bab8ac';
+        $VIRUSTOTAL_KEY = getenv('VIRUSTOTAL_KEY');
+
+        $api_key = $VIRUSTOTAL_KEY;
         $scan_id = $this->sendFileToVirusTotal($new_path, $api_key);
 
         if (!$scan_id) {
