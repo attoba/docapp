@@ -1,16 +1,17 @@
 pipeline {
     agent any
 
+    tools {
+        sonarQube 'sonar-scanner' // Replace with the name of your configured scanner in Jenkins
+    }
+
     stages {
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('SonarQube') { // Replace 'SonarQube' with the name of your configured SonarQube server
-			sh 'sonar-scanner'
+                withSonarQubeEnv('SonarQube') { // Replace 'SonarQube' with your SonarQube server name
+                    sh 'sonar-scanner'
                 }
             }
         }
-
-       
     }
-
 }
