@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        label any // Replace 'your-node-label' with the label of your Jenkins agent
-    }
+    agent any
 
     stages {
         stage('SonarQube Analysis') {
