@@ -20,10 +20,10 @@ pipeline {
                 echo 'Testing...'
                 snykSecurity(
                 snykInstallation: 'Snyk',
-                //snykTokenId: '<Your Snyk API Token ID>',
+                snykTokenId: $SNYK_TOKEN_ID,
                 // place other parameters here
                 )
             }
-    }
+        }
     }
 }
