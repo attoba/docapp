@@ -15,15 +15,15 @@ pipeline {
         //    }
         //}
 
-       stage('Dependency Scanning (Snyk)') {
+        stage('Dependency Scanning (Snyk)') {
             steps {
-                withCredentials([string(credentialsId: 'snyk-token', variable: 'SNYK_TOKEN')]) {
-                    sh '''
-                    snyk auth $SNYK_TOKEN
-                    snyk test
-                    '''
-                }
+                echo 'Testing...'
+                snykSecurity(
+                snykInstallation: 'Snyk',
+                //snykTokenId: '<Your Snyk API Token ID>',
+                // place other parameters here
+                )
             }
-        }
+    }
     }
 }
