@@ -21,7 +21,7 @@ pipeline {
                 snykSecurity(
                 snykInstallation: 'Snyk',
                 //snykTokenId: "${env.SNYK_TOKEN}", // Access environment variable
-                snykTokenId: "cf8415a3-1d6b-4d81-be96-b3451d1675b0"
+                snykTokenId: "cf8415a3-1d6b-4d81-be96-b3451d1675b0",
                 targetFile: 'composer.lock'
 
                 // place other parameters here
