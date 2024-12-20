@@ -6,14 +6,14 @@ pipeline {
     }
 
     stages {
-        //stage('SonarQube Analysis') {
-        //    steps {
-        //        withSonarQubeEnv('SonarQube') { // Replace 'SonarQube' with your SonarQube server name
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') { // Replace 'SonarQube' with your SonarQube server name
                     // Use double quotes around the path to handle spaces
-        //            sh "\"$SCANNER_HOME/bin/sonar-scanner.bat\""
-        //        }
-        //    }
-        //}
+                    sh "\"$SCANNER_HOME/bin/sonar-scanner.bat\""
+                }
+            }
+        }
 
         stage('Dependency Scanning (Snyk)') {
             steps {
