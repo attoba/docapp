@@ -6,6 +6,9 @@ pipeline {
     }
 
     stages {
+		stage('SCM') {
+		    checkout scm
+		  }
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') { // Replace 'SonarQube' with your SonarQube server name
