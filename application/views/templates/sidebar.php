@@ -48,7 +48,7 @@
     }
     .content-wrapper {
       max-width: 100%; /* Ensure the content expands fully */
-      text-align: center;
+      /*text-align: center;*/
     }
     .sidebar.collapsed {
       width: 80px; /* Collapsed width */
@@ -144,7 +144,7 @@
 /* Special styling for Settings section */
 .settings-section {
   position: absolute;
-  text-align: center; /* Center the settings text */
+  /*text-align: center;  Center the settings text */
   bottom: 0;
   left: 0;
   width: 100%;
@@ -246,73 +246,69 @@
     <div class="sidebar bg-dark p-3" id="sidebar">
     <button class="btn btn-light btn-sm mb-3" id="toggleBtn">☰</button>
     <!-- Sidebar content container -->
-    <div class="sidebar-content">
-      <a href="<?php echo base_url(); ?>dashboard/adminDashboard">
-        <i class="bi bi-file-earmark-plus"></i>
-        <span class="menu-text">dashboard</span>
-      </a>
+<div class="sidebar-content">
+  <a href="<?php echo base_url(); ?>dashboard/adminDashboard">
+    <i class="bi bi-speedometer2"></i> <!-- Icon adjusted for "Dashboard" -->
+    <span class="menu-text">Dashboard</span>
+  </a>
 
-      <!-- Menu header (not clickable, just expandable) -->
-      <div class="menu-header" id="documentsMenu">
-        <i class="bi bi-folder"></i>
-        <span class="menu-text">Documents</span>
-        <i class="bi bi-chevron-down"></i> <!-- Expand icon -->
-      </div>
-      <!-- Collapsible sublinks -->
-      <div class="submenu show" id="documentsSubmenu">
-        <a href="<?php echo base_url(); ?>documents">
-          <i class="bi bi-file-earmark"></i>
-          <span class="submenu-text">All Documents</span>
-        </a>
-        <a href="<?php echo base_url(); ?>mydocuments">
-          <i class="bi bi-arrow-repeat"></i>
-          <span class="submenu-text">Transferred </span>
-        </a>
-        <a href="<?php echo base_url(); ?>mydocuments">
-          <i class="bi bi-person"></i>
-          <span class="submenu-text">My Documents</span>
-        </a>
-      </div>
+  <!-- Menu header (not clickable, just expandable) -->
+  <div class="menu-header" id="documentsMenu">
+    <i class="bi bi-folder2-open"></i> <!-- Icon adjusted for "Documents" -->
+    <span class="menu-text">Documents</span>
+    <i class="bi bi-chevron-down"></i> <!-- Expand icon -->
+  </div>
+  <!-- Collapsible sublinks -->
+  <div class="submenu show" id="documentsSubmenu">
+    <a href="<?php echo base_url(); ?>documents">
+      <i class="bi bi-files"></i> <!-- Icon adjusted for "All Documents" -->
+      <span class="submenu-text">All Documents</span>
+    </a>
+    <a href="<?php echo base_url(); ?>mydocuments">
+      <i class="bi bi-arrow-left-right"></i> <!-- Icon adjusted for "Transferred" -->
+      <span class="submenu-text">Transferred</span>
+    </a>
+    <a href="<?php echo base_url(); ?>mydocuments">
+      <i class="bi bi-file-person"></i> <!-- Icon adjusted for "My Documents" -->
+      <span class="submenu-text">My Documents</span>
+    </a>
+  </div>
 
-       <!-- Menu header (not clickable, just expandable) -->
-       <div class="menu-header" id="clientsMenu">
-        <i class="bi bi-folder"></i>
-        <span class="menu-text">Clients</span>
-        <i class="bi bi-chevron-down"></i> <!-- Expand icon -->
-      </div>
-      <!-- Collapsible sublinks -->
-      <div class="submenu show" id="clientsSubmenu">
-        <a href="<?php echo base_url(); ?>clients">
-          <i class="bi bi-file-earmark"></i>
-          <span class="submenu-text">Clients</span>
-        </a>
-        <a href="<?php echo base_url(); ?>NewClient">
-          <i class="bi bi-arrow-repeat"></i>
-          <span class="submenu-text">New Client </span>
-        </a>
-        <a href="<?php echo base_url(); ?>mydocuments">
-          <i class="bi bi-person"></i>
-          <span class="submenu-text">My Documents</span>
-        </a>
-      </div>
-    
+  <!-- Menu header (not clickable, just expandable) -->
+  <div class="menu-header" id="clientsMenu">
+    <i class="bi bi-people"></i> <!-- Icon adjusted for "Clients" -->
+    <span class="menu-text">Clients</span>
+    <i class="bi bi-chevron-down"></i> <!-- Expand icon -->
+  </div>
+  <!-- Collapsible sublinks -->
+  <div class="submenu show" id="clientsSubmenu">
+    <a href="<?php echo base_url(); ?>clients">
+      <i class="bi bi-person-lines-fill"></i> <!-- Icon adjusted for "Clients" -->
+      <span class="submenu-text">Clients</span>
+    </a>
+    <a href="<?php echo base_url(); ?>NewClient">
+      <i class="bi bi-person-plus"></i> <!-- Icon adjusted for "New Client" -->
+      <span class="submenu-text">New Client</span>
+    </a>
+  </div>
 
-      <a href="<?php echo base_url(); ?>create">
-        <i class="bi bi-file-earmark-plus"></i>
-        <span class="menu-text">Create</span>
-      </a>
-      
-      <a href="<?php echo base_url(); ?>calendar">
-        <i class="bi bi-calendar3"></i>
-        <span class="menu-text">Calendar</span>
-      </a>
+  <a href="<?php echo base_url(); ?>create">
+    <i class="bi bi-plus-circle"></i> <!-- Icon adjusted for "Create" -->
+    <span class="menu-text">Create</span>
+  </a>
+  
+  <a href="<?php echo base_url(); ?>calendar">
+    <i class="bi bi-calendar-event"></i> <!-- Icon adjusted for "Calendar" -->
+    <span class="menu-text">Calendar</span>
+  </a>
 
-      <a href=href="<?php echo base_url(); ?>contact">
-        <i class="bi bi-person-lines-fill"></i>
-        <span class="menu-text">Contact</span>
-      </a>
-     
-    </div>
+  <a href="<?php echo base_url(); ?>contact">
+    <i class="bi bi-envelope"></i> <!-- Icon adjusted for email-based "Contact" -->
+    <span class="menu-text">Contact</span>
+  </a>
+
+</div>
+
       <!-- Settings section at the bottom -->
       <div class="menu-header settings-section" id="SettingsMenu">
         <i class="bi bi-gear"></i>
@@ -324,7 +320,12 @@
           <i class="bi bi-file-earmark"></i>
           <span class="submenu-text">Change Password</span>
         </a>
+        <a href="<?php echo base_url(); ?>users/usersTable">
+          <i class="bi bi-file-earmark"></i>
+          <span class="submenu-text">Users</span>
+        </a>
       </div>
+    
 
    </div>
 
@@ -353,7 +354,7 @@
       if (sidebar.classList.contains('collapsed')) {
         mainContent.style.marginLeft = '80px'; // Adjust margin for collapsed sidebar
       } else {
-        mainContent.style.marginLeft = '250px'; // Adjust margin for expanded sidebar
+        mainContent.style.marginLeft = '160px'; // Adjust margin for expanded sidebar
       }
     });
     // Toggle submenu visibility

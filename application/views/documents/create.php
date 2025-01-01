@@ -6,7 +6,7 @@
   <title>Document</title>
 </head>
 <body>
-<?php include APPPATH . 'views/templates/menu.php'; ?>
+<?php require_once APPPATH . 'views/templates/menu.php'; ?>
 <h2 class="text-center"><?= $title; ?></h2>
 
 <?php if(validation_errors()): ?>
@@ -21,12 +21,10 @@
         <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label>Title</label>
-                    <input type="text" class="form-control" name="title" placeholder="Add Title">
+                    <label>Title <input type="text" class="form-control" name="title" placeholder="Add Title" /></label>     
                 </div>
                 <div class="form-group">
-                    <label>Description</label>
-                    <textarea id="editor1" class="form-control" name="description" placeholder="Add Body"></textarea>
+                    <label>Description <textarea id="editor1" class="form-control" name="description" placeholder="Add Body"></textarea></label>
                 </div>
                 <!-- Add dropdown for client selection -->
                 <div class="form-group">

@@ -2,9 +2,9 @@
 namespace App\Config;
 
 defined('BASEPATH') || exit('No direct script access allowed');
-use Dotenv\Dotenv;
-$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
-$dotenv->load();
+#use Dotenv\Dotenv;
+#$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
+#$dotenv->load();
 
 /*
 |--------------------------------------------------------------------------

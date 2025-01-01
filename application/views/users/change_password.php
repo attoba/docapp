@@ -1,7 +1,6 @@
 <div class="container">
     <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
         <div class="col-md-4">
-            <h1 class="text-center"><?= $title; ?></h1>
             
             <?php if(validation_errors()): ?>
                 <div class="alert alert-danger">
@@ -76,6 +75,7 @@ html, body {
 .container {
     justify-content: center;
     align-items: center;
+    font-weight: bold;
 }
 
 .input-group-text {

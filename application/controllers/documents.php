@@ -8,7 +8,7 @@ class Documents extends CI_controller{
     }
    
     public function testDocuments() {
-        $data = $this->document->get_documents(FALSE); // Fetch all documents
+        $data = $this->document->get_documents(false); // Fetch all documents
     
         // Debugging: Output data to check if it's being retrieved
         echo '<pre>';
@@ -18,6 +18,9 @@ class Documents extends CI_controller{
     
 
     public function index(){
+        if(!$this->session->userdata('logged_in')){
+            redirect('users/login');
+        }
         $data = [
             "title"         => "Liste des documents.",
             'view'          => 'documents/doc',
@@ -54,7 +57,7 @@ class Documents extends CI_controller{
             'title' => '',
             'view' => 'documents/create',
             'clients'=> $this->ClientModel->get_all_clients(),
-            'user_id'=> $this->session->userdata('logged_in'),
+            'user_id'=> $this->session->userdata('user_id'),
             'current_page'  => 'create',
 
         ];      
@@ -91,16 +94,16 @@ public function edit($id){
     if(!$this->session->userdata('logged_in')){
         redirect('users/login');
     }
-
-    if(empty($data['document'])){
-        show_404();
-    }
     
     $data = [
         'title' => 'edit des Documents',
         'document' => $this->document->get_documents($id),
         'view' => 'documents/edit',
-    ];      
+    ];  
+    
+    if(empty($data['document'])){
+        show_404();
+    }    
     $this->load->view('templates/sidebar',$data);
 }
 
@@ -115,6 +118,9 @@ public function update($id){
 }
     
 public function consult_document($id) {
+    if(!$this->session->userdata('logged_in')){
+        redirect('users/login');
+    }
     if (empty($id)) {
         show_404();
     }
@@ -149,8 +155,11 @@ public function consult_document($id) {
 
 
 public function fetchDocuments() {
+    if(!$this->session->userdata('logged_in')){
+        redirect('users/login');
+    }
     // Call the model to get documents
-    $data = $this->document->get_documents(FALSE); // Pass FALSE to fetch all documents
+    $data = $this->document->get_documents(false); // Pass false to fetch all documents
 
     // Debugging: Check if data is retrieved
     if (empty($data)) {
@@ -158,10 +167,19 @@ public function fetchDocuments() {
         return;
     }
 
-    // Format the data
+    // F||mat the data
     $formattedData = array_map(function ($row) {
         $actions = '
         <div class="d-flex justify-content-center align-items-center">
+            <a href="'.base_url('documents/download/'.$row['file']).'" class="btn btn-success btn-sm mr-1">
+              <i class="fas fa-download"></i> 
+            </a>
+            <a class="btn-secondary btn-sm mr-1" href="'.base_url('documents/share_file_via_email/'.$row['id']).'" title="Modifier">
+                <i class="fas fa-share-alt"></i>
+            </a>
+            <a class="btn btn-info btn-sm mr-1" href="'.base_url('documents/preview_document/'.$row['id']).'" title="Modifier">
+                <i class="fas fa-eye"></i>
+            </a>
             <a class="btn btn-primary btn-sm mr-1" href="'.base_url('documents/edit/'.$row['id']).'" title="Modifier">
                 <i class="fas fa-edit"></i>
             </a>
@@ -178,6 +196,9 @@ public function fetchDocuments() {
 }
 
 public function fetchDocumentsByUser() {
+    if(!$this->session->userdata('logged_in')){
+        redirect('users/login');
+    }
     
     // Get the logged-in user's ID from the session
     $user_id= $this->session->userdata('user_id');
@@ -211,13 +232,15 @@ public function fetchDocumentsByUser() {
         return $row;
     }, $data);
     
-   // echo json_encode(['data' => $formattedData]);
     echo json_encode(['data' => $formattedData], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP);
 
 }
 
 
 public function transfer($document_id) {
+    if(!$this->session->userdata('logged_in')){
+        redirect('users/login');
+    }
     // Fetch the document and ensure it hasn't been transferred yet
     $document = $this->document->get_documents($document_id);
 
@@ -236,6 +259,9 @@ return;
 
  // Approve Action
  public function approve($document_id) {
+    if(!$this->session->userdata('logged_in')){
+        redirect('users/login');
+    }
     // Update the document status to "approved"
     $this->document->updateTransferStatus($document_id, 'approved');
     // Return success response
@@ -244,6 +270,9 @@ return;
 
 // Reject Action
 public function reject($document_id) {
+    if(!$this->session->userdata('logged_in')){
+        redirect('users/login');
+    }
     // Update the document status back to "not_transferred"
     $this->document->updateTransferStatus($document_id, 'not_transferred');
     // Return success response
@@ -252,6 +281,9 @@ public function reject($document_id) {
 
 
 public function share_file_via_email($id) {
+    if(!$this->session->userdata('logged_in')){
+        redirect('users/login');
+    }
 
     // Configure email
 $config = array(
@@ -262,7 +294,7 @@ $config = array(
     'smtp_pass' => 'dmjx qpwu djsd vwaq',  // App-specific password cause 2FA is enabled
     'mailtype'  => 'html',
     'charset'   => 'utf-8',
-    'wordwrap'  => TRUE,
+    'wordwrap'  => true,
     'newline'   => "\r\n",  // Ensure newline characters
     'smtp_crypto' => 'tls',  // Use TLS encryption
 );
@@ -291,14 +323,16 @@ $this->email->initialize($config);
 
     } else {
         $this->session->set_flashdata('error', $this->email->print_debugger());
-        //$error=$this->email->print_debugger();
-        //echo $error;
+      
         redirect('documents');
     }     
 }
 
 public function preview_document($id)
 {
+    if(!$this->session->userdata('logged_in')){
+        redirect('users/login');
+    }
     // Load the document model to retrieve document info
     $document = $this->document->get_documents($id);
 
@@ -317,11 +351,7 @@ public function preview_document($id)
     if (file_exists($filePath)) {
         switch (strtolower($extension)) {
             case 'pdf':
-                header('Content-Type: application/pdf');
-                break;
-            case 'txt':
-                header('Content-Type: text/plain');
-                break;                   
+                header('Content-Type: application/pdf');break;                  
             case 'jpg':
             case 'jpeg':
                 header('Content-Type: image/jpeg');
@@ -329,27 +359,14 @@ public function preview_document($id)
             case 'png':
                 header('Content-Type: image/png');
                 break;
-                /*
             case 'doc':
             case 'docx':
-                    // Use Google Docs Viewer for Word files
-                    $documentUrl = base_url('assets/files/documents/' . $document['file']);
-                    $googleDocsViewerUrl = "https://docs.google.com/viewer?url=" . urlencode($documentUrl) . "&embedded=true";
-                    
-                    // Embed Google Docs Viewer in an iframe
-                   // echo "<iframe src='{$googleDocsViewerUrl}' width='100%' height='600px' frameborder='0'></iframe>";
-                    break;
-                    */
-            case 'doc':
-                case 'docx':
                     // Force download or open in Microsoft Word
                     header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
                     header('Content-Disposition: inline; filename="' . $document['file'] . '"');
-                    readfile($filePath);
-                    break;
+                    readfile($filePath); break;
             case 'txt':
-                header('Content-Type: text/plain');
-                exit();                
+                header('Content-Type: text/plain');exit();                
             default:
                 show_error('Preview not supported for this file type');
                 return;
@@ -364,6 +381,9 @@ public function preview_document($id)
 
 public function download($file)
 {
+    if(!$this->session->userdata('logged_in')){
+        redirect('users/login');
+    }
 $this->load->helper('download');
 
 // Define the file path
@@ -375,7 +395,7 @@ if (file_exists($file_path)) {
     $this->load->helper('download');
     
     // Force the file to be downloaded
-    force_download($file_path, NULL);
+    force_download($file_path, null);
 } else {
     // If the file is not found, show a 404 error
     //show_404();

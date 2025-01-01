@@ -19,6 +19,9 @@ class ClientController extends CI_Controller
 
     public function clientsTable()
     {
+        if(!$this->session->userdata('logged_in')){
+            redirect('users/login');
+        }
         $data = [
             "title"         => "Liste de tous les clients.",
             "view"          => "clients/clients_table",
@@ -31,6 +34,9 @@ class ClientController extends CI_Controller
 
     public function fetchClients($status = null)
     {
+        if(!$this->session->userdata('logged_in')){
+            redirect('users/login');
+        }
         if ($status) {
             $this->db->where('status', $status);
         }
@@ -67,6 +73,9 @@ class ClientController extends CI_Controller
 
     public function registerClient()
     {
+        if(!$this->session->userdata('logged_in')){
+            redirect('users/login');
+        }
         $data = [
             "title"         => "Créer un client",
             'view' => 'clients/register_client',
@@ -80,6 +89,9 @@ class ClientController extends CI_Controller
 
     public function register()
     {
+        if(!$this->session->userdata('logged_in')){
+            redirect('users/login');
+        }
         var_dump($this->session->userdata('id'));
 
         $this->form_validation->set_rules('email', 'E-mail', 'required|valid_email', [
@@ -151,6 +163,9 @@ class ClientController extends CI_Controller
 
     public function edit_client($id)
     {
+        if(!$this->session->userdata('logged_in')){
+            redirect('users/login');
+        }
         $this->load->library('form_validation');
         $this->load->model('ClientModel');
         $this->load->model('user_model');
@@ -226,6 +241,9 @@ class ClientController extends CI_Controller
 
     public function consult_client($id)
     {
+        if(!$this->session->userdata('logged_in')){
+            redirect('users/login');
+        }
         $client = $this->ClientModel->get_client($id);
         $users  = $this->user_model->get_all_users();
         $data   = [
@@ -242,6 +260,9 @@ class ClientController extends CI_Controller
 
     public function delete_client($id)
     {
+        if(!$this->session->userdata('logged_in')){
+            redirect('users/login');
+        }
         $this->ClientModel->delete_client($id);
         $this->session->set_flashdata('success', 'Le client a été supprimé avec succès.');
         redirect('ClientController/clientsTable');
@@ -249,6 +270,9 @@ class ClientController extends CI_Controller
 
     public function selectClient($client_id)
     {
+        if(!$this->session->userdata('logged_in')){
+            redirect('users/login');
+        }
         $client = $this->ClientModel->get_client($client_id);
 
         if ($client) {

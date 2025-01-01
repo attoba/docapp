@@ -5,11 +5,9 @@ $current_page = $this->uri->segment(1); // Get the first segment of the URL
 <nav class="simple-menu">
     <ul class="nav-menu">
         <li class="nav-item <?php if($current_page == 'clients') echo 'active'; ?>">
-            <a href="<?php echo base_url(); ?>clients">All</a>
+            <a href="<?php echo base_url(); ?>clients">All Clients</a>
         </li>
-        <li class="nav-item <?php if($current_page == 'mydocuments') echo 'active'; ?>">
-            <a href="<?php echo base_url(); ?>mydocuments">My Documents</a>
-        </li>
+        
         <li class="nav-item <?php if($current_page == 'NewClient') echo 'active'; ?>">
             <a href="<?php echo base_url(); ?>NewClient">New Client</a>
         </li>

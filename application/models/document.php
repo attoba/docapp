@@ -1,5 +1,15 @@
 <?php
 use PHPUnit\Framework\TestCase;
+require 'vendor/autoload.php';
+use Dotenv\Dotenv;
+        
+// Load the .env file
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../../'); 
+$dotenv->load();
+        
+
+    
+    
 
 class Document extends CI_Model {
     public function __construct() {
@@ -180,10 +190,9 @@ public function create($client_id, $user_id) {
         }
 
         // Send the file to VirusTotal API for scanning
-        $VIRUSTOTAL_KEY = getenv('VIRUSTOTAL_KEY');
-
-        $api_key = $VIRUSTOTAL_KEY;
-        $scan_id = $this->sendFileToVirusTotal($new_path, $api_key);
+        $VIRUSTOTAL_KEY = $_ENV['VIRUSTOTAL_KEY'];
+       
+        $scan_id = $this->sendFileToVirusTotal($new_path, $VIRUSTOTAL_KEY);
 
         if (!$scan_id) {
             log_message('error', 'VirusTotal scan initiation failed.');
@@ -193,7 +202,7 @@ public function create($client_id, $user_id) {
         }
 
         // Retrieve the scan result using scan_id
-        $scan_result = $this->getVirusTotalScanResult($scan_id, $api_key);
+        $scan_result = $this->getVirusTotalScanResult($scan_id, $VIRUSTOTAL_KEY);
 
         if (isset($scan_result['positives']) && $scan_result['positives'] > 0) {
             log_message('error', 'File detected with potential malware.');
@@ -297,8 +306,6 @@ private function getVirusTotalScanResult($scan_id, $api_key) {
     public function delete($id){
         $this->db->where('id', $id);
         $this->db->delete('documents');
-        return true;
-
         // Logs
         $log_data = [
             'document_id' => $id,
@@ -307,6 +314,7 @@ private function getVirusTotalScanResult($scan_id, $api_key) {
             'details' => 'Deleted document version',
         ];
         $this->db->insert('document_logs', $log_data);
+        return true;
     }
 
     public function get_last_version_number($document_id) {

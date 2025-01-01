@@ -100,9 +100,9 @@
                             <div class="col-md-6">
                                 <div class="interest-checkbox">
                                     <input type="checkbox" name="interets[]" value="<?php echo $custom_interest; ?>"
-                                           id="custom-interest<?php echo md5($custom_interest); ?>"
+                                           id="custom-interest<?php echo $custom_interest; ?>"
                                            checked>
-                                    <label for="custom-interest<?php echo md5($custom_interest); ?>"><?php echo $custom_interest; ?></label>
+                                    <label for="custom-interest<?php echo $custom_interest; ?>"><?php echo $custom_interest; ?></label>
                                 </div>
                             </div>
                         <?php endif; ?>

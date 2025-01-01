@@ -296,13 +296,15 @@
         <a href="<?= site_url('documents/delete_document/'.$document['id']) ?>" class="custom-btn custom-btn-danger">
             <i class="fas fa-trash-alt"></i> Supprimer
         </a>
-        <a href="<?= site_url('documents/share/' . $document['id']) ?>" class="custom-btn custom-btn-outline-secondary">
-        <i class="fas fa-share-alt"></i> Partager
-    </a>
-    <a href="<?= site_url('documents/preview_document/' . $document['id']) ?>" class="custom-btn custom-btn-info" target="_blank">
-        <i class="fas fa-eye"></i> Aperçu
-    </a>
-    </div>
+        <!-- Share Button -->
+        <button type="button" class="custom-btn custom-btn-outline-secondary" data-toggle="modal" data-target="#event_entry_modal"
+                onclick="openEmailModal(<?php echo $document['id']; ?>)">
+            <i class="fas fa-share-alt"></i> Partager    
+        </button>
+        <a href="<?= site_url('documents/preview_document/' . $document['id']) ?>" class="custom-btn custom-btn-info" target="_blank" rel="noopener">
+            <i class="fas fa-eye"></i> Aperçu
+        </a>
+</div>
 
    <!-- Document Details (Left) -->
 <div class="document-details">
@@ -326,7 +328,7 @@
         <div class="detail-label"><i class="fas fa-file"></i><strong>Fichier:</strong></div>
         <div class="detail-value">
             <?= $document['original_name'] ?>
-            <a href="<?= site_url('documents/preview_document/' . $document['id']) ?>" class="custom1-btn custom1-btn-info"target="_blank">
+            <a href="<?= site_url('documents/preview_document/' . $document['id']) ?>" class="custom1-btn custom1-btn-info"target="_blank" rel="noopener">
                <div></div>
                 <i class="fas fa-eye"></i>
             </a>
@@ -360,6 +362,103 @@
 
     <!-- PDF Canvas (Right) -->
     <canvas id="pdfCanvas" style="border: 1px solid black; max-width: 100%; height: auto;"></canvas>
+
+ 
+<!-- Email Modal as Dialog -->
+<div id="emailModal" class="modal" style="display: none;"> <!-- Modal is hidden by default -->
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="emailForm" method="post" action="<?php echo site_url('documents/share_file_via_email/'.$document['id']); ?>">
+                <div class="modal-header">
+                    <h5 class="modal-title">Partager le Document</h5>
+                    <button type="button" class="close" onclick="closeEmailModal()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="document_id" id="document_id" value="">
+                    <label for="recipient_email">Email du Destinataire:</label>
+                    <input type="email" name="recipient_email" required placeholder="Entrez l'email">
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-send">Envoyer</button>
+                    <button type="button" class="btn btn-cancel" onclick="closeEmailModal()">Annuler</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Function to open the modal and set the document_id
+    function openEmailModal(docId) {
+        // Set the document_id in the hidden input field
+        document.getElementById('document_id').value = docId;
+        
+        // Show the modal by changing its display style to 'flex'
+        document.getElementById('emailModal').style.display = 'flex';
+    }
+
+    // Function to close the modal
+    function closeEmailModal() {
+        // Hide the modal by changing its display style to 'none'
+        document.getElementById('emailModal').style.display = 'none';
+    }
+</script>
+
+<style>
+    /* Basic styling for the modal */
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none; /* Hide by default */
+        align-items: center;
+        justify-content: center;
+        z-index: 1050;
+    }
+    .modal-dialog {
+        max-width: 500px;
+        width: 100%;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+    .modal-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+    }
+    .close {
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+    .btn-send, .btn-cancel {
+        padding: 10px 20px;
+        font-size: 1rem;
+        border: none;
+        cursor: pointer;
+    }
+    .btn-send {
+        background-color: #28a745;
+        color: white;
+    }
+    .btn-cancel {
+        background-color: #dc3545;
+        color: white;
+    }
+</style>
 
     <!-- Document Versions at the Bottom -->
     <div class="versions-container">

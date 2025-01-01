@@ -1,95 +1,104 @@
 <style>
-    .alert-card {
-        position: fixed;
-        top: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 1000;
-        width: 500px;
-        opacity: 0;
-        animation: swingInOut 8s forwards;
-        transform-origin: top center;
-        margin-left: 129px;
-        border-radius: 20px;
-    }
+.alert-card {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: 90%;
+    max-width: 500px;
+    opacity: 0;
+    animation: swingInOut 8s forwards;
+    transform-origin: top center;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
 
-    @keyframes swingInOut {
-        0% {
-            opacity: 0;
-            transform: translateX(-50%) rotateX(-90deg);
-        }
-        10% {
-            opacity: 1;
-            transform: translateX(-50%) rotateX(0deg);
-        }
-        90% {
-            opacity: 1;
-            transform: translateX(-50%) rotateX(0deg);
-        }
-        100% {
-            opacity: 0;
-            transform: translateX(-50%) rotateX(-90deg);
-        }
-    }
+.centered-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f9fafb;
+    padding: 30px;
+    min-height: 100vh; /* Assure que la carte est centrée sur l'écran */
+}
 
-    .centered-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: #f8f9fa;
-    }
+.card {
+    margin-top: 20px;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    width: 100%;
+    max-width: 700px;
+    border: none;
+}
 
-    .card {
-        margin-top: 20px;
-        padding: 30px;
-        border-radius: 20px;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        background-color: #fff;
-        max-width: 600px;
-        width: 100%;
-        border: 1px solid #e0e0e0;
-        position: relative;
-        margin-bottom: 20px;
-    }
+.card h3 {
+    font-size: 26px;
+    color: #4A4A4A;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
 
-    .card h3 {
-        text-align: center;
-        margin-bottom: 30px;
-        font-size: 24px;
-        color: #343a40;
-    }
+.card hr {
+    margin: 20px 0;
+    border: none;
+    border-top: 1px solid #eee;
+}
 
-    .card hr {
-        margin: 20px 0;
-        border: none;
-        border-top: 1px solid #e0e0e0;
-    }
+.form-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #4a4a4a;
+}
 
-    .form-group label {
-        font-weight: bold;
-        font-size: 14px;
-        color: #495057;
-    }
+.form-control {
+    border-radius: 10px;
+    border: 1px solid #ced4da;
+    padding: 10px 15px;
+}
 
-    .form-control {
-        border-radius: 10px;
-        border: 1px solid #ced4da;
-    }
+.form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+}
 
-    .form-control:focus {
-        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-        border-color: #007bff;
-    }
+.btn {
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
 
-    .invalid-feedback {
-        display: none;
-    }
+.btn-success {
+    background-color:rgb(15, 67, 189);
+    border-color:rgb(22, 47, 205);
+}
 
-    .was-validated .form-control:invalid ~ .invalid-feedback {
-        display: block;
-    }
+.btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+.input-group .btn {
+    padding: 0 15px;
+    font-size: 16px;
+}
+
+.interest-section .input-group {
+    margin-top: 10px;
+}
+
+.invalid-feedback {
+    font-size: 12px;
+    color: #e3342f;
+}
+
 </style>
-<?php include APPPATH . 'views/templates/menuClient.php'; ?>
+<?php require_once APPPATH . 'views/templates/menuClient.php'; ?>
 <div class="centered-container">
     <div class="card">
         <div class="mx-auto text-center">
@@ -100,15 +109,15 @@
         <!-- Form Starts -->
         <?php echo form_open('ClientController/register', ['class' => 'needs-validation', 'novalidate' => true]); ?>
 
-        <div class="form-group">
-            <label for="inputEmail4">E-mail</label>
-            <input type="email" class="form-control" name="email" id="inputEmail4"
-                   value="<?php echo set_value('email'); ?>" required>
-            <div class="invalid-feedback text-left">Veuillez saisir un e-mail valide.</div>
-        </div>
-
         <div class="form-row">
-            
+            <!-- Email -->
+            <div class="form-group col-md-6">
+                <label for="inputEmail4">E-mail</label>
+                <input type="email" class="form-control" name="email" id="inputEmail4"
+                       value="<?php echo set_value('email'); ?>" required>
+                <div class="invalid-feedback text-left">Veuillez saisir un e-mail valide.</div>
+            </div>
+            <!-- Nom -->
             <div class="form-group col-md-6">
                 <label for="name">Nom</label>
                 <input type="text" id="lastname" name="name" class="form-control"
@@ -117,39 +126,48 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <label for="company">Entreprise</label>
-            <input type="text" id="company" name="company" class="form-control"
-                   value="<?php echo set_value('company'); ?>" required>
-            <div class="invalid-feedback text-left">Veuillez saisir le nom de l'entreprise.</div>
-        </div>
-
-        <div class="form-group">
-            <label for="phone_number">Numéro téléphone</label>
-            <div class="input-group">
-                <input type="tel" id="phone_number" name="phone_number[]" class="form-control"
-                       value="<?php echo set_value('phone_number[0]'); ?>" required>
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary add-phone-btn" type="button"
-                            title="Ajouter un autre numéro">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                </div>
+        <div class="form-row">
+            <!-- Entreprise -->
+            <div class="form-group col-md-6">
+                <label for="company">Entreprise</label>
+                <input type="text" id="company" name="company" class="form-control"
+                       value="<?php echo set_value('company'); ?>" required>
+                <div class="invalid-feedback text-left">Veuillez saisir le nom de l'entreprise.</div>
             </div>
-            <div class="invalid-feedback text-left">Veuillez saisir le numéro du téléphone.</div>
+            <!-- Numéro de téléphone -->
+            <div class="form-group col-md-6">
+                <label for="phone_number">Numéro téléphone</label>
+                <div class="input-group">
+                    <input type="tel" id="phone_number" name="phone_number[]" class="form-control"
+                           value="<?php echo set_value('phone_number[0]'); ?>" required>
+                    
+                </div>
+                <div class="invalid-feedback text-left">Veuillez saisir le numéro du téléphone.</div>
+            </div>
         </div>
-        <div id="additional-phone-numbers"></div>
-        <!--        interets-->
-        <div class="form-group interest-section">
-            <label for="interets">Intérêts</label>
 
+        <div class="form-row">
+            <!-- Ville -->
+            <div class="form-group col-md-6">
+                <label for="ville">Ville</label>
+                <input type="text" id="ville" name="ville" class="form-control"
+                       value="<?php echo set_value('ville'); ?>" required>
+                <div class="invalid-feedback text-left">Veuillez saisir la ville.</div>
+            </div>
+            <!-- Adresse -->
+            <div class="form-group col-md-6">
+                <label for="address">Adresse</label>
+                <textarea rows="3" class="form-control" name="address" id="address" required><?php echo set_value('address'); ?></textarea>
+                <div class="invalid-feedback text-left">Veuillez saisir l'adresse.</div>
+            </div>
+        </div>
+
+        <div class="form-group interest-section">
+            <label for="interets">Prestation</label>
             <div class="row" id="interest-grid">
                 <?php
-                // Predefined interests
                 $predefined_interests = ['Site Web', 'Marketing Digital', 'SEO', 'Logiciel de gestion'];
                 ?>
-
-                <!-- Display Predefined Interests -->
                 <?php foreach ($predefined_interests as $index => $interest): ?>
                     <div class="col-md-6">
                         <div class="interest-checkbox d-flex align-items-center">
@@ -160,43 +178,9 @@
                     </div>
                 <?php endforeach; ?>
             </div>
-
-            <!-- Placeholder for Additional Interests -->
-            <div class="row" id="additional-interest-fields"></div>
-
-            <!-- Section to Add New Interests -->
-            <div class="additional-interests mt-3">
-                <label for="new-interest">Ajouter un nouvel intérêt</label>
-                <div class="input-group">
-                    <input type="text" id="new-interest" class="form-control" name="new_interest[]"
-                           placeholder="Nouvel intérêt">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary add-interest-btn" type="button"
-                                title="Ajouter un autre intérêt">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
         </div>
 
-
-        <!--        interets-->
-        <div class="form-group">
-            <label for="ville">Ville</label>
-            <input type="text" id="ville" name="ville" class="form-control"
-                   value="<?php echo set_value('ville'); ?>" required>
-            <div class="invalid-feedback text-left">Veuillez saisir la ville.</div>
-        </div>
-
-        <div class="form-group">
-            <label for="address">Adresse</label>
-            <textarea rows="5" class="form-control" name="address" id="address"
-                      required><?php echo set_value('address'); ?></textarea>
-            <div class="invalid-feedback text-left">Veuillez saisir l'adresse.</div>
-        </div>
-
-        <button class="btn btn-lg btn-success btn-block" type="submit">Ajouter</button>
+        <button class="btn btn-primary btn-block" type="submit">Ajouter</button>
         <?php echo form_close(); ?>
         <!-- Form Ends -->
 

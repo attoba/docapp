@@ -1,26 +1,4 @@
-<?php if(validation_errors()): ?>
-    <div class="alert alert-danger">
-        <?php echo validation_errors(); ?>
-    </div>
-<?php endif; ?>
 
-<?php if($this->session->flashdata('user_logedin')): ?>
-    <div class="alert alert-success">
-        <?= $this->session->flashdata('user_logedin'); ?>
-    </div>
-<?php endif; ?>
-
-<?php if($this->session->flashdata('user_failed')): ?>
-    <div class="alert alert-danger">
-        <?= $this->session->flashdata('user_failed'); ?>
-    </div>
-<?php endif; ?>
-
-<?php if($this->session->flashdata('error')): ?>
-    <div class="alert alert-danger">
-        <?= $this->session->flashdata('error'); ?>
-    </div>
-<?php endif; ?>
 
 
 <!-- Form Open Tag -->
@@ -51,12 +29,22 @@
                     </div>
                 </div>
             </div>
-        <?php $api_key = getenv('RECAPTCHA_KEY'); ?>
+        <?php
+        
+            require 'vendor/autoload.php';
 
-            <!-- Google reCAPTCHA -->
+            use Dotenv\Dotenv;  
+            $dotenvPath = dirname(__DIR__, 3);  // Adjust the path
+            $dotenv = Dotenv::createUnsafeImmutable($dotenvPath);
+            $dotenv->load();       
+    
+          ?>
+
+            <!-- Google reCAPTCHA -->          
             <div class="form-group mb-3">
-                <div class="g-recaptcha" data-sitekey=$api_key></div>
+                <div class="g-recaptcha" data-sitekey=<?php echo htmlspecialchars($_ENV['RECAPTCHA_KEY'], ENT_QUOTES, 'UTF-8'); ?>></div>
             </div>
+
 
             <!-- Submit Button -->
             <button type="submit" class="btn btn-primary btn-block">Submit</button>

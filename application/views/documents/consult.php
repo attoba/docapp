@@ -121,7 +121,7 @@
                 <div><i class="fas fa-file"></i><strong>Fichier:</strong></div>
                 <div>
                     <?= $document['original_name'] ?>
-                    <a href="<?= site_url('documents/preview_document/' . $document['id']) ?>" class="btn btn-info" style="padding: 0; border: none; background-color: transparent; color: white; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;" target="_blank">
+                    <a href="<?= site_url('documents/preview_document/' . $document['id']) ?>" class="btn btn-info" style="padding: 0; border: none; background-color: transparent; color: white; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;" target="_blank" rel="noopener">
                          <i class="fas fa-eye"></i>
                     </a>
                 </div>

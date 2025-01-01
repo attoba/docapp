@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/style.css">
     <title>Document Management System</title>
     
-    <!-- Bootstrap CSS from CDN -->
+    <!-- Bootstrap CSS from CDN 
+     -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">    
    
     <!-- Font Awesome for Icons -->
@@ -85,7 +86,7 @@
             <!-- Center the Logo -->
             <a class="navbar-brand mx-auto" href="#">
                 <img src="/tutorial2/logo3.png" alt="Logo" style="height: 40px; margin-right: 10px;">
-                Doc Fairy
+                FMS Docs
             </a>
 
            
@@ -93,11 +94,7 @@
                 <!-- Right-aligned Login/Register or Logout/Logged In -->
                 <ul class="navbar-nav ml-auto">
                   <?php if(!$this->session->userdata('logged_in')): ?>
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo ($this->uri->segment(1) == 'users' && $this->uri->segment(2) == 'register') ? 'active' : ''; ?>" href="<?php echo base_url(); ?>users/register">
-                            <i class="fas fa-user-plus"></i> Register
-                        </a>
-                    </li>
+                   
                     <li class="nav-item">
                         <a class="nav-link <?php echo ($this->uri->segment(1) == 'users' && $this->uri->segment(2) == 'login') ? 'active' : ''; ?>" href="<?php echo base_url(); ?>users/login">
                             <i class="fas fa-sign-in-alt"></i> Login

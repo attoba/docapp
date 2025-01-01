@@ -25,11 +25,11 @@
                 <?php endif; ?>
 
                 <div class="form-group" id="editModal">
-                    <label>Title</label>
+                    <label><input type="text" /> Title</label>
                     <input type="text" class="form-control" name="title" placeholder="Add Title" value="<?php echo $document['title']; ?>">
                 </div>
                 <div class="form-group">
-                    <label>Description</label>
+                    <label><input type="text" /> Description</label>
                     <textarea id="editor1" class="form-control" name="description"><?php echo set_value('description', $document['description']); ?></textarea>
                 </div>
                 
